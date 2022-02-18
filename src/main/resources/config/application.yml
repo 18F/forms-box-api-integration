@@ -181,6 +181,8 @@ security.saml2:
 #host: ${HOST:localhost}
 #port: ${PORT:8181}
 #end-point: ${ENDPOINT:}
+#box sign api request
+box-request-token: ${BOX_REQUEST_TOKEN:}
 #sign request
 sign-request-token: ${SIGN_REQUEST_TOKEN:}
 sign-request-base-url: ${SIGN_BASE_URL:https://irs.sign-dev.forms.gov/api/v1/}

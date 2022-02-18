@@ -1,5 +1,6 @@
 package gov.gsa.forms.web.rest;
 
+import gov.gsa.forms.service.BoxSignReqService;
 import gov.gsa.forms.service.SignRequestService;
 import java.security.Principal;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SignRequestResource {
 
-    private final SignRequestService signRequest;
+//    private final SignRequestService signRequest;
+//
+//    public SignRequestResource(SignRequestService signRequest) {
+//        this.signRequest = signRequest;
+//    }
 
-    public SignRequestResource(SignRequestService signRequest) {
-        this.signRequest = signRequest;
+    private final BoxSignReqService signReqService;
+    public SignRequestResource(BoxSignReqService signReqService){
+        this.signReqService=signReqService;
     }
 
     @GetMapping(value = "/sign")
@@ -30,6 +36,6 @@ public class SignRequestResource {
         Principal principal
     ) {
         log.info("Pdf Url :{} and Pdf Name :{}", pdfUrl, pdfName);
-        return signRequest.executeSignRequest(pdfUrl, pdfName, principal, taxpayerName2, taxpayerLastName2, taxpayer2Email, jointRequest);
+        return signReqService.executeBoxSignRequest(pdfUrl, pdfName, principal, taxpayerName2, taxpayerLastName2, taxpayer2Email, jointRequest);
     }
 }

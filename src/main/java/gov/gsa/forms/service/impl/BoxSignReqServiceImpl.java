@@ -17,6 +17,7 @@ import javax.inject.Named;
 @Named
 @Slf4j
 public class BoxSignReqServiceImpl implements BoxSignReqService {
+    private String defaultEmail = "test@gmail.com";
     private String envVariable;
     @Value("${box-request-token}")
     private String boxRequestToken;
@@ -40,7 +41,7 @@ public class BoxSignReqServiceImpl implements BoxSignReqService {
     private  String postBoxRequest(String  url, String token, String email) throws IOException {
         URL pdfurl = new URL(url);
         if(email==null || email.isEmpty()){
-            email = "mesele29@gmail.com";
+            email = defaultEmail;
         }
         final String uuid = UUID.randomUUID().toString().replace("-", "");
         //get connected to the boxsign
@@ -51,11 +52,11 @@ public class BoxSignReqServiceImpl implements BoxSignReqService {
         BoxFile.Info newFileInfo = rootFolder.uploadFile(in, uuid+".pdf");
         log.debug(String.valueOf(newFileInfo));
         in.close();
-        List<BoxSignRequestFile> files = new ArrayList<BoxSignRequestFile>();
+        List<BoxSignRequestFile> files = new ArrayList<>();
         BoxSignRequestFile file = new BoxSignRequestFile(newFileInfo.getID());
         files.add(file);
          //sign request
-        List<BoxSignRequestSigner> signers = new ArrayList<BoxSignRequestSigner>();
+        List<BoxSignRequestSigner> signers = new ArrayList<>();
         BoxSignRequestSigner newSigner = new BoxSignRequestSigner(email);
         newSigner.setRole(BoxSignRequestSignerRole.Signer);
         newSigner.setEmbedUrlExternalUserId(uuid);

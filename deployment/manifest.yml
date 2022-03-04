@@ -9,6 +9,7 @@ applications:
     env:
       SPRING_PROFILES_ACTIVE: prod
       JBP_CONFIG_OPEN_JDK_JRE: '{ "jre": { version: 11.+ } }'
+      API_TOKEN: token
     # services:
     #   - formservice-rds
     routes:
